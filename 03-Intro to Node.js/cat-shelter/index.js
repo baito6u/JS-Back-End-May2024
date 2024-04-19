@@ -124,7 +124,18 @@ const server = http.createServer((req, res) => {
   }
 });
 
+function render(view, data, callback) {
+  fs.readFile(view, 'utf-8', (err, result) => {
+    if(err) {
+      return callback (err)
+    }
+
+    Object.keys(data).reduce((acc, key) => {
+      result.replace()
+    }, result)
+  })
+}
+
 server.listen(port);
 console.log("Server is listening on port 5000...");
-console.log("created by Todor Krumov");
 console.log("created by Todor Krumov");
