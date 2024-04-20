@@ -1,5 +1,6 @@
 const http = require("http");
 const fs = require("fs");
+const querystring = require("querystring");
 
 const port = 5000;
 
@@ -56,22 +57,25 @@ const views = {
   addCat: "./views/addCat.html",
   addBreed: "./views/addBreed.html",
   style: "./content/styles/site.css",
+  cat: "./views/part/cat.html",
 };
 
 const server = http.createServer((req, res) => {
   if (req.url === "/") {
-    fs.readFile(views.home, { encoding: "utf-8" }, (err, result) => {
+    render(views.cat, cats, (err, catResult) => {
       if (err) {
         res.statusCode = 404;
         return res.end();
       }
 
-      res.writeHead(200, {
-        "content-type": "text/html",
-      });
+      render(views.home, [{ cats: catResult }], (err, result) => {
+        res.writeHead(200, {
+          "content-type": "text/html",
+        });
 
-      res.write(result);
-      res.end();
+        res.write(result);
+        res.end();
+      });
     });
   } else if (req.url === "/content/styles/site.css") {
     fs.readFile(views.style, { encoding: "utf-8" }, (err, result) => {
@@ -86,7 +90,7 @@ const server = http.createServer((req, res) => {
       res.write(result);
       res.end();
     });
-  } else if (req.url === "/cats/add-cat") {
+  } else if (req.url === "/cats/add-cat" && req.method === "GET") {
     fs.readFile(views.addCat, { encoding: "utf-8" }, (err, result) => {
       if (err) {
         res.statusCode = 404;
@@ -100,7 +104,22 @@ const server = http.createServer((req, res) => {
       res.write(result);
       res.end();
     });
-  }else if (req.url === "/cats/add-breed") {
+  } else if (req.url === "/cats/add-cat" && req.method === "POST") {
+    let body = "";
+
+    req.on("data", (chunk) => {
+      body += chunk;
+    });
+
+    req.on("close", () => {
+      const parssedBody = querystring.parse(body);
+      parssedBody.id = cats[cats.length - 1].id + 1;
+      cats.push(parssedBody);
+      
+      res.writeHead(302, { location: "/" });
+      res.end();
+    });
+  } else if (req.url === "/cats/add-breed") {
     fs.readFile(views.addBreed, { encoding: "utf-8" }, (err, result) => {
       if (err) {
         res.statusCode = 404;
@@ -124,16 +143,21 @@ const server = http.createServer((req, res) => {
   }
 });
 
-function render(view, data, callback) {
-  fs.readFile(view, 'utf-8', (err, result) => {
-    if(err) {
-      return callback (err)
+function render(view, dataArr, callback) {
+  fs.readFile(view, "utf-8", (err, result) => {
+    if (err) {
+      return callback(err);
     }
 
-    Object.keys(data).reduce((acc, key) => {
-      result.replace()
-    }, result)
-  })
+    const htmlResult = dataArr.map(data => {
+        return Object.keys(data).reduce((acc, key) => {
+          const pattern = new RegExp(`{{${key}}}`, "g");
+          return acc.replace(pattern, data[key]);
+        }, result);
+    }).join("\n")
+
+    callback(null, htmlResult);
+  });
 }
 
 server.listen(port);
