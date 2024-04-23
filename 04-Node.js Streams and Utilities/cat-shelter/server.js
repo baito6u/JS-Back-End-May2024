@@ -1,8 +1,9 @@
 const http = require("http");
-const homeHtml = require("./views/home/index");
-const addBreedHtml = require("./views/addBreed");
-const siteCss = require("./content/styles/site");
-const catTemplate = require("./views/catTemplate");
+const fs = require("fs/promises");
+// const homeHtml = require("./views/home/index");
+// const addBreedHtml = require("./views/addBreed");
+// const siteCss = require("./content/styles/site");
+// const catTemplate = require("./views/catTemplate");
 
 const PORT = 5555;
 
@@ -72,7 +73,11 @@ const server = http.createServer((req, res) => {
           .replace(descriptionPattern, cat.description)
       )
       .join("");
-      
+    
+      const homeHtml = fs.readFile('./views/home/index.html');
+      const addBreedHtml = fs.readFile("./views/addBreed");
+      const siteCss = fs.readFile("./content/styles/site");
+      const catTemplate = fs.readFile("./views/catTemplate");
     const homeHtmlTemplate = homeHtml.replace("{{cats}}", catHtml);
 
     res.writeHead(200, { "Content-Type": "text/html" });
