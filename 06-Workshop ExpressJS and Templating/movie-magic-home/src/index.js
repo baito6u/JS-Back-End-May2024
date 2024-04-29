@@ -5,6 +5,9 @@ const path = require("path");
 const app = express();
 const PORT = 5000;
 
+//configure the static files in the public folder
+app.use(express.static('src/public')); //path.join(__dirname, 'public'))
+
 //setup handlebars
 app.engine(
   "hbs",
@@ -14,6 +17,9 @@ app.engine(
 );
 app.set("view engine", "hbs"); //setup view engin
 app.set('views', path.join(__dirname, 'views')); //change the default behavior of folder views
+//app.set("views", "src/views")
+
+
 
 //setup express
 app.get("/", (req, res) => {
