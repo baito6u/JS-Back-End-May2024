@@ -6,8 +6,8 @@ function configHandlebars(app) {
       extname: "hbs", //for setup extention name
     }));
   app.set("view engine", "hbs"); //setup view engin
-  app.set("views", path.join(__dirname, "views")); //change the default behavior of folder views
-  //app.set("views", "src/views")
+  app.set("views", "src/views");
+  //app.set("views", path.resolve("src/views")); //change the default behavior of folder views
 
   return app;
 }

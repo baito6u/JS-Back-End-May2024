@@ -3,7 +3,7 @@ const path = require("path");
 
 function configExpress(app) {
     //configure the static files in the public folder
-app.use(express.static("src/public")); //path.join(__dirname, 'public'))
+app.use(express.static("src/public")); //path.resolve('src/public'))
 
     return app;
 }
