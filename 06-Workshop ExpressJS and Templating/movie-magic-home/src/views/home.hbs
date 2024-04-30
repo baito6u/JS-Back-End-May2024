@@ -3,7 +3,21 @@
     <div class="band">
 
         <!-- If there are posts for creature in the database display each of them -->
-        <div class="flip flip-vertical">
+        {{#each movies}}
+            <div class="flip flip-vertical">
+                <div class="front">
+                    <img src="{{image}}" alt="{{title}}">
+                </div>
+                <div class="back">
+                    <h1>{{title}}</h1>
+                    <h2>Genre: {{genre}}</h2>
+                    <p>Description: {{description}}</p>
+                    <a href="#" class="details">Details</a>
+                </div>
+            </div>
+        {{/each}}
+
+        {{!-- <div class="flip flip-vertical">
             <div class="front">
                 <img src="/img/jungle-cruise.jpeg" alt="Jungle-Cruise">
             </div>
@@ -55,7 +69,7 @@
                     stop the burglars and to bring them to justice.</p>
                 <a href="#" class="details">Details</a>
             </div>
-        </div>
+        </div> --}}
 
         <!-- If there are still no posts in the database display: -->
         <!-- <div class="no-posts">

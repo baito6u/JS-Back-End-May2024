@@ -10,7 +10,12 @@ const movies = [
   },
 ];
 
+exports.getAll = () => {
+  return movies.slice(); //shallow coppy of movies array
+  //return [...movies];
+}
+
 exports.create = (movieData) => {
     movies.push(movieData);
-    console.log(movieData);
+    
 };
