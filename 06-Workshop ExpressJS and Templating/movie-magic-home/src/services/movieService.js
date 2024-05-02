@@ -40,8 +40,24 @@ exports.getAll = () => {
 };
 
 exports.getOne = (movieId) => {
-  const movie =  movies.find(movie => movie._id == movieId);
+  const movie = movies.find((movie) => movie._id == movieId);
   return movie;
+};
+
+exports.search = (title, genre, year) => {
+  let ressult = movies.slice();
+
+  if (title) {
+    ressult = ressult.filter(movie => movie.title.toLowerCase().includes(title.toLowerCase()));
+  }
+  if (genre) {
+    ressult = ressult.filter(movie => movie.genre.toLowerCase() === genre.toLowerCase());
+  }
+  if (year) {
+    ressult = ressult.filter(movie => movie.year === year);
+  }
+
+  return ressult;
 };
 
 exports.create = (movieData) => {
