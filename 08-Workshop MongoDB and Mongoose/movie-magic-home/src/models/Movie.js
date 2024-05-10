@@ -5,7 +5,7 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  gentre: {
+  genre: {
     type: String,
     required: true,
   },
@@ -19,11 +19,6 @@ const movieSchema = new mongoose.Schema({
     min: 1900,
     max: 2030,
   },
-  imageURL: {
-    type: String,
-    required: true,
-    match: /^https?/,
-  },
   rating: {
     type: Number,
     required: true,
@@ -34,6 +29,11 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: true,
     maxLength: 1000,
+  },
+  image: {
+    type: String,
+    requiired: true,
+    match: /^https?/
   },
 });
 

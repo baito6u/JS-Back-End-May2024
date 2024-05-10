@@ -1,3 +1,5 @@
+const Movie = require('../models/Movie');
+
 const movies = [
   {
     _id: 1,
@@ -34,10 +36,7 @@ const movies = [
   },
 ];
 
-exports.getAll = () => {
-  return movies.slice(); //shallow coppy of movies array
-  //return [...movies];
-};
+exports.getAll = () => Movie.find();
 
 exports.getOne = (movieId) => {
   const movie = movies.find((movie) => movie._id == movieId);
@@ -60,7 +59,4 @@ exports.search = (title, genre, year) => {
   return ressult;
 };
 
-exports.create = (movieData) => {
-  movieData._id = movies[movies.length - 1]._id + 1;
-  movies.push(movieData);
-};
+exports.create = (movieData) => Movie.create(movieData);
