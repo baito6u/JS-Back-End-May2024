@@ -15,7 +15,7 @@ configHandlebars(app);
 //using the routes.js module
 app.use(routes);
 
-mongoose.connect(`mongodb://localhost:27017/movies`)
+mongoose.connect(`mongodb://localhost:27017/magic-movies`)
     .then(() => {
         console.log(`DB Connected`);
 
