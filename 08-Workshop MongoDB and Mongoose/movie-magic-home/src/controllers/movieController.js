@@ -14,7 +14,7 @@ router.post("/create", async (req, res) => {
     res.redirect("/");
   } catch (error) {
     console.log(error.message);
-    res.redirect('/create'); 
+    res.redirect("/create");
   }
 });
 
@@ -24,7 +24,11 @@ router.get("/movies/:movieId", async (req, res) => {
 
   //TODO: This is not prefect, use hanldebars helper
   movie.rating = new Array(Number(movie.rating)).fill(true);
-  res.render("details", {movie});
+  res.render("details", { movie });
+});
+
+router.get("/movies/:movieId/attach", (req, res) => {
+  res.render("movie/attach");
 });
 
 module.exports = router;
