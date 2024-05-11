@@ -3,32 +3,32 @@ const mongoose = require("mongoose");
 const castSchema = new mongoose.Schema({
   name: {
     type: String,
-    require: true,
+    required: true,
   },
   age: {
     type: Number,
-    require: true,
+    required: true,
     max: 120,
     min: 5,
   },
   born: {
     type: String,
-    require: true,
+    required: true,
   },
   nameInMovie: {
     type: String,
-    require: true,
+    required: true,
   },
   castImage: {
     type: String,
-    require: true,
+    required: true,
     validate: {
       validator(value) {
-        return /^https?\/\//.test(value);
+        return /^https?:\/\//.test(value);
       },
       message: (props) =>
-        `${props.value} is not a valid url for the cast image!`,
-    },
+        `${props.value} is not a valid url for the cast image!`
+    }
   },
 });
 
