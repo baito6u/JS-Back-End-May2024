@@ -3,7 +3,7 @@ const router = require("express").Router();
 const movieService = require("../services/movieService");
 
 router.get("/", async (req, res) => {
-  const movies = await movieService.getAll().lean();  //lean() changes query to objects
+  const movies = await movieService.getAll().lean(); //lean() changes query to objects
 
   res.render("home", { movies });
 });
@@ -13,7 +13,7 @@ router.get("/about", (req, res) => {
 });
 
 router.get("/search", (req, res) => {
-  const {title, genre, year} = req.query;
+  const { title, genre, year } = req.query;
   const movieResult = movieService.search(title, genre, year);
 
   res.render("search", { movies: movieResult });
