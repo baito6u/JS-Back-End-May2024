@@ -14,6 +14,8 @@ module.exports = {
       return
     }
 
+    movie.starRating = '&#x2605;'.repeat(movie.rating)
+
     res.render("details", { movie });
   },
   createGetController: (req, res) => {
