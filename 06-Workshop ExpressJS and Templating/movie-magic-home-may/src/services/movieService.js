@@ -1,7 +1,7 @@
 const fs = require("fs/promises");
 const { Movie } = require("../models/Movie");
 
-const dataFilePath = ".data/database.json";
+const dataFilePath = "./data/database.json";
 
 async function readFile() {
   const data = await fs.readFile(dataFilePath);
@@ -24,6 +24,8 @@ function toMovieModel(data) {
   movie.imageURL = data.imageURL;
   movie.rating = data.rating;
   movie.description = data.description;
+
+  return movie;
 }
 
 async function getAllMovies() {
