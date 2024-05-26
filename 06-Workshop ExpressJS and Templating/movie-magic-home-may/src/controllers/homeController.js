@@ -6,6 +6,9 @@ module.exports = {
     res.render("about");
   },
   notFoundController: (req, res) => {
-    res.render("404")
-  }
+    res.render("404");
+  },
+  detailsController: (req, res) => {
+    res.render("details");
+  },
 };
