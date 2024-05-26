@@ -36,12 +36,39 @@ async function getAllMovies() {
 
 async function getMovieById(id) {
   const movies = await readFile();
-  const movie = movies.find(movie => movie.id == id);
+  const movie = movies.find((movie) => movie.id == id);
 
-  return movie ? toMovieModel(movie) : undefined;
+  return movie ? toMovieModel(movie) : movie;
+}
+
+async function createMovie(movieData) {
+  const id = uuid();
+
+  const movie = {
+    id,
+    title: movieData.title,
+    genre: movieData.genre,
+    director: movieData.director,
+    year: Number(movieData.year),
+    imageURL: movieData.imageURL,
+    rating: Number(movieData.rating),
+    description: movieData.description,
+  };
+
+  const movies = await readFile();
+  movies.push(movie);
+  await writeFile(movies);
+
+  return toMovieModel(movies);
+}
+
+function uuid() {
+  return "xxxx-xxxx".replace(/x/g, () =>
+    (Math.random() * 16 | 0).toString(16));
 }
 
 module.exports = {
-    getAllMovies,
-    getMovieById,
-}
+  getAllMovies,
+  getMovieById,
+  createMovie,
+};

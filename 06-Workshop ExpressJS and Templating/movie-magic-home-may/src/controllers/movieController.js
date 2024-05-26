@@ -1,4 +1,4 @@
-const { getAllMovies, getMovieById } = require("../services/movieService");
+const { getAllMovies, getMovieById, createMovie } = require("../services/movieService");
 
 module.exports = {
   homeContoller: async (req, res) => {
@@ -11,17 +11,23 @@ module.exports = {
 
     if (!movie) {
       res.render("404");
-      return
+      return;
     }
 
-    movie.starRating = '&#x2605;'.repeat(movie.rating)
+    movie.starRating = "&#x2605;".repeat(movie.rating);
 
     res.render("details", { movie });
   },
+
   createGetController: (req, res) => {
     res.render("create");
   },
-  //createPostController
+
+  createPostController: async (req, res) => {
+    const result = await createMovie(req.body);
+
+    res.redirect('/details/' + result.id);
+  },
 
   searchController: (req, res) => {
     res.render("search");
