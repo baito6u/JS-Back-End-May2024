@@ -1,4 +1,5 @@
-const { homeContoller, aboutController, notFoundController, detailsController } = require("../controllers/homeController");
+const { homeContoller, detailsController } = require("../controllers/movieController");
+const { aboutController, notFoundController } = require("../controllers/staticViewsController");
 
 const router = require("express").Router();
 
