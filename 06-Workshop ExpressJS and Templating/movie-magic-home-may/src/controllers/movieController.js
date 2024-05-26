@@ -8,5 +8,10 @@ module.exports = {
     createGetController: (req, res) => {
         res.render("create");
     },
+    //createPostController
+    
+    searchController: (req, res) => {
+        res.render("search");
+    },
     
 }
