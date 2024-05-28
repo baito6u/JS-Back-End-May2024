@@ -1,4 +1,8 @@
-const { getAllMovies, getMovieById, createMovie } = require("../services/movieService");
+const {
+  getAllMovies,
+  getMovieById,
+  createMovie,
+} = require("../services/movieService");
 
 module.exports = {
   homeContoller: async (req, res) => {
@@ -24,9 +28,26 @@ module.exports = {
   },
 
   createPostController: async (req, res) => {
+    const errors = {
+      title: !req.body.title,
+      genre: !req.body.genre,
+      director: !req.body.director,
+      year: !req.body.year,
+      imageURL: !req.body.imageURL,
+      rating: !req.body.rating,
+      description: !req.body.description,
+    };
+
+    console.log(errors);
+
+    if(Object.values(errors).includes(true)) {
+      res.render('create', {movie: req.body, errors});
+      return;
+    }
+
     const result = await createMovie(req.body);
 
-    res.redirect('/details/' + result.id);
+    res.redirect("/details/" + result.id);
   },
 
   searchController: (req, res) => {
