@@ -2,6 +2,7 @@ const {
   getAllMovies,
   getMovieById,
   createMovie,
+  search
 } = require("../services/movieService");
 
 module.exports = {
@@ -9,6 +10,7 @@ module.exports = {
     const movies = await getAllMovies();
     res.render("home", { movies });
   },
+
   detailsController: async (req, res) => {
     const id = req.params.id;
     const movie = await getMovieById(id);
@@ -38,8 +40,6 @@ module.exports = {
       description: !req.body.description,
     };
 
-    console.log(errors);
-
     if(Object.values(errors).includes(true)) {
       res.render('create', {movie: req.body, errors});
       return;
@@ -50,7 +50,14 @@ module.exports = {
     res.redirect("/details/" + result.id);
   },
 
-  searchController: (req, res) => {
-    res.render("search");
+  searchController: async (req, res) => {
+    const {title, genre, year} = req.query;
+    const movieResult =  await search(title, genre, year);
+
+    if (!movieResult) {
+      res.render("404");
+      return;
+    }
+    res.render("search", { movieResult });
   },
 };

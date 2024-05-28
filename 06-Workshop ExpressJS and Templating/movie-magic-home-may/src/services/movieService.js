@@ -67,8 +67,26 @@ function uuid() {
     (Math.random() * 16 | 0).toString(16));
 }
 
+async function search (title, genre, year) {
+  const movies = await readFile();
+  const result = movies.slice();
+  
+  if (title) {
+    result = result.filter(movie => movie.title.toLowerCase().includes(title.toLowerCase()));
+  }
+  if (genre) {
+    result = result.filter(movie => movie.genre.toLowerCase() === genre.toLowerCase());
+  }
+  if (year) {
+    result = result.filter(movie => movie.year === year);
+  }
+
+  return result ? toMovieModel(result) : result;
+}
+
 module.exports = {
   getAllMovies,
   getMovieById,
   createMovie,
+  search
 };
