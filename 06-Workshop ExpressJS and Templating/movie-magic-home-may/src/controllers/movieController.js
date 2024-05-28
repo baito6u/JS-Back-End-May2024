@@ -51,13 +51,13 @@ module.exports = {
   },
 
   searchController: async (req, res) => {
-    const {title, genre, year} = req.query;
-    const movieResult =  await search(title, genre, year);
+    
+    const movies = await search(req.query);
 
-    if (!movieResult) {
+    if (!movies) {
       res.render("404");
       return;
     }
-    res.render("search", { movieResult });
+    res.render("search", {movies, query: req.query});
   },
 };
