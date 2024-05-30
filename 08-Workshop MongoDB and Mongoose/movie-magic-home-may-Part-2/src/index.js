@@ -2,16 +2,23 @@ const express = require("express");
 const { hbsConfig } = require("./config/hbsConfig");
 const { expresConfig } = require("./config/expressConfig");
 const { router } = require("./config/routes");
-
-const app = express();
+const { databaseConfig } = require("./config/databaseConfig");
 
 const PORT = 3000;
 
-hbsConfig(app);
-expresConfig(app);
+async function start() {
 
-app.use(router);
+  const app = express();
+  
+  await databaseConfig();
+  hbsConfig(app);
+  expresConfig(app);
+  
+  app.use(router);
+  
+  app.listen(PORT, () =>
+    console.log(`Server is listening on port at http://localhost:${PORT}`)
+  );
+}
 
-app.listen(PORT, () =>
-  console.log(`Server is listening on port at http://localhost:${PORT}`)
-);
+start()
