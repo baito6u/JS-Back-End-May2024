@@ -1,6 +1,6 @@
-const { Schema, SchemaTypes: Types, model } = require("mongoose");
+const mongoose = require("mongoose");
 
-const castSchema = new Schema({
+const castSchema = new mongoose.Schema({
     name: {
       type: String,
       required: true,
@@ -25,11 +25,11 @@ const castSchema = new Schema({
       regexp: /^https?:\/\/.+/,
     },
     movie: {
-      type: [Types.ObjectId],
+      type: [mongoose.Types.ObjectId],
       ref: "Movie",
     },
   });
   
-  const Cast = model("Cast", castSchema);
+  const Cast = mongoose.model("Cast", castSchema);
   
-  module.exports = { Cast };
+  module.exports = Cast;
