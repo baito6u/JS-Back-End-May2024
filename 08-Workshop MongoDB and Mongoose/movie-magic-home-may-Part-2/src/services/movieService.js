@@ -6,14 +6,13 @@ async function getAllMovies() {
   return movies;
 }
 
-async function getMovieById(id) {
+async function getMovieById(id, returnRaw = false) {
   const movie = await Movie.findById(id).lean();
 
   return movie;
 }
 
 async function createMovie(movieData) {
-
   const movie = new Movie({
     title: movieData.title,
     genre: movieData.genre,
@@ -23,6 +22,19 @@ async function createMovie(movieData) {
     description: movieData.description,
     imageURL: movieData.imageURL,
   });
+
+  await movie.save();
+
+  return movie;
+}
+
+async function attachCastToMovie(movieId, castId) {
+  const movie = await Movie.findById(movieId);
+
+  if (movie == null) {
+    throw new Error(` Movie ${movieId} not found`);
+  }
+  movie.cast.push(castId);
 
   await movie.save();
 
@@ -57,5 +69,6 @@ module.exports = {
   getAllMovies,
   getMovieById,
   createMovie,
+  attachCastToMovie,
   search,
 };
