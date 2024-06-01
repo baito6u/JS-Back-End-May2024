@@ -26,5 +26,15 @@
         </div>
     </div>
 
+    <div class="main-cast-card">
+        {{#each cast}}
+        {{> cast}}
+        {{else}}
+        <div class="no-posts">
+            <p class="no-offer">There are no cast yet...</p>
+        </div>
+        {{/each}}
+    </div>
+
 </section>
 {{/with}}
