@@ -12,9 +12,11 @@ module.exports = {
       return;
     }
 
-    const allCast = await getAllCasts(id);
+    const allCast = await getAllCasts();
 
-    res.render("cast-attach", { movie, allCast });
+    const castInMovie = movie.cast.map(id => id.toString())
+
+    res.render("cast-attach", { movie, allCast: allCast.filter(c => !castInMovie.find(castId => castId == c._id.toString())) });
   },
   attachPostController: async (req, res) => {
     const movieId = req.params.id;

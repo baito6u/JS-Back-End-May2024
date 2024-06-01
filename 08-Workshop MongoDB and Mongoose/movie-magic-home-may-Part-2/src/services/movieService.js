@@ -6,8 +6,8 @@ async function getAllMovies() {
   return movies;
 }
 
-async function getMovieById(id, returnRaw = false) {
-  const movie = await Movie.findById(id).lean();
+async function getMovieById(id) {
+  const movie = await Movie.findById(id).lean().populate('cast');
 
   return movie;
 }
