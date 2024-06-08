@@ -4,11 +4,11 @@ const { User } = require("../models/User");
 
 async function register(email, password) {
   // chek if user exist -> throw errror if true
-  const existinUser = await User.findOne({ email });
+  const existingUser = await User.findOne({ email });
 
-  if (existinUser) {
-    throw new Error("Email is already used");
-  }
+    if (existingUser) {
+      throw new Error("Email is already used");
+    }
 
   // create DB record
   //hash password
