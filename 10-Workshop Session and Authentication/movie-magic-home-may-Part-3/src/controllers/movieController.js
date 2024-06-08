@@ -5,9 +5,21 @@ const {
   search,
 } = require("../services/movieService");
 
+const jwt = require('jsonwebtoken')
+
 module.exports = {
   homeContoller: async (req, res) => {
-    res.cookie("message", "hello", { httpOnly: true });
+    const headers = {
+      alg: 'HSS256',
+      typ: 'JWT'
+    };
+    const data = {
+      message: 'hello'
+    };
+    const token = jwt.sign(data, 'top secret');
+    console.log(token);
+
+    res.cookie("token", token, { httpOnly: true });
     const movies = await getAllMovies();
     res.render("home", { movies });
   },
