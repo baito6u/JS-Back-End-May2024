@@ -5,14 +5,8 @@ const {
   search,
 } = require("../services/movieService");
 
-const jwt = require('jsonwebtoken')
-
 module.exports = {
   homeContoller: async (req, res) => {
-    const token = req.cookies.token;
-    const data = jwt.verify(token, 'top secret')
-    console.log(data);
-
     const movies = await getAllMovies();
     res.render("home", { movies });
   },
