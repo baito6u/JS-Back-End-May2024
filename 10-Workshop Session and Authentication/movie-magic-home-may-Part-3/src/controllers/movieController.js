@@ -9,17 +9,10 @@ const jwt = require('jsonwebtoken')
 
 module.exports = {
   homeContoller: async (req, res) => {
-    const headers = {
-      alg: 'HSS256',
-      typ: 'JWT'
-    };
-    const data = {
-      message: 'hello'
-    };
-    const token = jwt.sign(data, 'top secret');
-    console.log(token);
+    const token = req.cookies.token;
+    const data = jwt.verify(token, 'top secret')
+    console.log(data);
 
-    res.cookie("token", token, { httpOnly: true });
     const movies = await getAllMovies();
     res.render("home", { movies });
   },
