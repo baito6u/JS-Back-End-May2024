@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
-require('../models/Movie')
-require('../models/Cast')
+require("../models/Movie");
+require("../models/Cast");
+require("../models/User");
 
 const connetionString = "mongodb://localhost:27017/movie-magic-2";
 
