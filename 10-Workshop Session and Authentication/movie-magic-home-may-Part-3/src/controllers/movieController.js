@@ -2,11 +2,12 @@ const {
   getAllMovies,
   getMovieById,
   createMovie,
-  search
+  search,
 } = require("../services/movieService");
 
 module.exports = {
   homeContoller: async (req, res) => {
+    res.cookie("message", "hello", { httpOnly: true });
     const movies = await getAllMovies();
     res.render("home", { movies });
   },
@@ -40,8 +41,8 @@ module.exports = {
       description: !req.body.description,
     };
 
-    if(Object.values(errors).includes(true)) {
-      res.render('create', {movie: req.body, errors});
+    if (Object.values(errors).includes(true)) {
+      res.render("create", { movie: req.body, errors });
       return;
     }
 
@@ -51,13 +52,12 @@ module.exports = {
   },
 
   searchController: async (req, res) => {
-    
     const movies = await search(req.query);
 
     if (!movies) {
       res.render("404");
       return;
     }
-    res.render("search", {movies, query: req.query});
+    res.render("search", { movies, query: req.query });
   },
 };
