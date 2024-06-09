@@ -29,14 +29,14 @@ async function createMovie(movieData, authorId) {
   return movie;
 }
 
-async function editMovie(movieId, movieData, authorId) {
+async function editMovie(movieId, movieData, userId) {
   const movie = await Movie.findById(movieId);
 
   if (!movie) {
     throw new Error(` Movie ${movieId} not found`);
   }
 
-  if (movie.author.toString() != authorId) {
+  if (movie.author.toString() != userId) {
     throw new Error("Access denied");
   }
 
@@ -49,14 +49,21 @@ async function editMovie(movieId, movieData, authorId) {
   movie.imageURL = movieData.imageURL;
 
   await movie.save();
+
+  return movie;
 }
 
-async function attachCastToMovie(movieId, castId) {
+async function attachCastToMovie(movieId, castId, userId) {
   const movie = await Movie.findById(movieId);
 
   if (movie == null) {
     throw new Error(` Movie ${movieId} not found`);
   }
+
+  if (movie.author.toString() != userId) {
+    throw new Error("Access denied");
+  }
+
   movie.cast.push(castId);
 
   await movie.save();
