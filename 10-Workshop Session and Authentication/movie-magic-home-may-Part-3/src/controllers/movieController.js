@@ -9,8 +9,6 @@ module.exports = {
   homeContoller: async (req, res) => {
     const movies = await getAllMovies();
 
-    
-
     res.render("home", { movies });
   },
 

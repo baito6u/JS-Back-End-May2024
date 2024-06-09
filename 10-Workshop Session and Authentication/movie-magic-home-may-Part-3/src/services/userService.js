@@ -23,12 +23,25 @@ async function register(email, password) {
   return user;
 }
 
-async function login(email, password) {}
+async function login(email, password) {
+    // chek if user exist -> throw errror if true
+    const user = await User.findOne({ email });
 
-async function logout() {}
+    if (!user) {
+      throw new Error("Incorrect email or password");
+    }
+    //compare hashed password -> throw error if false
+
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) {
+      throw new Error("Incorrect email or password");
+    }
+    //return matched user
+    return user;
+}
+
 
 module.exports = {
   register,
   login,
-  logout,
 };
