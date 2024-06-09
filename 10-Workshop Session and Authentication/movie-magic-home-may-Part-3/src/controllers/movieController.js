@@ -8,6 +8,9 @@ const {
 module.exports = {
   homeContoller: async (req, res) => {
     const movies = await getAllMovies();
+
+    res.clearCookie('token');
+    
     res.render("home", { movies });
   },
 

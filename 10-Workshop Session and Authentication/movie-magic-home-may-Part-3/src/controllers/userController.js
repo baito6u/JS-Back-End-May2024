@@ -1,4 +1,5 @@
 const { register } = require("../services/userService");
+const { createToken } = require("../services/tokenService");
 
 module.exports = {
   registerGetController: (req, res) => {
@@ -16,8 +17,10 @@ module.exports = {
       }
 
       const user = await register(email, password);
-      res.redirect("/");
+      const token = createToken(user);
 
+      res.cookie("token", token, { httpOnly: true });
+      res.redirect("/");
     } catch (err) {
       res.render("register", { data: { email }, error: err.message });
       return;
