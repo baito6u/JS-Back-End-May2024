@@ -12,6 +12,8 @@ const {
   createGetController,
   searchController,
   createPostController,
+  editGetController,
+  editPostController,
 } = require("../controllers/movieController");
 const {
   aboutController,
@@ -29,22 +31,32 @@ const { isGuest, isUser } = require("../middlewares/guards");
 
 const router = require("express").Router();
 
+//common
 router.get("/", homeContoller);
 router.get("/about", aboutController);
+router.get("/search", searchController);
+
+//a specific movie
 router.get("/details/:id", detailsController);
 router.get("/attach/:id", isUser(), attachGetController);
 router.post("/attach/:id", isUser(), attachPostController);
+router.get("/edit/:id", isUser(), editGetController);
+router.post("/edit/:id", isUser(), editPostController);
+
+//for creatin movie/cast
 router.get("/create/movie", isUser(), createGetController);
 router.post("/create/movie", isUser(), createPostController);
 router.get("/create/cast", isUser(), createCastGetController);
 router.post("/create/cast", isUser(), createCastPostController);
-router.get("/search", searchController);
+
+//user
 router.get("/register", isGuest(), registerGetController);
 router.post("/register", isGuest(), registerPostController);
 router.get("/login", isGuest(), loginGetController);
 router.post("/login", isGuest(), loginPostController);
 router.get("/logout", logoutController);
 
+//all other
 router.get("*", notFoundController);
 
 module.exports = { router };

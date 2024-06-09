@@ -26,7 +26,7 @@ module.exports = {
     }
 
     movie.isAuthor = req.user && req.user._id == movie.author.toString();
-    
+
     movie.starRating = "&#x2605;".repeat(movie.rating);
 
     res.render("details", { movie });
@@ -58,6 +58,12 @@ module.exports = {
 
     res.redirect("/details/" + result._id);
   },
+
+  editGetController: async (req, res) => {
+    res.render("edit");
+  },
+  
+  editPostController: async (req, res) => {},
 
   searchController: async (req, res) => {
     const movies = await search(req.query);

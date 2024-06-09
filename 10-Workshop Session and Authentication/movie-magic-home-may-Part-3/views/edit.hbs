@@ -4,20 +4,17 @@
 </div>
 {{/if}}
 
-<section id="create-page">
-    <div class="createSection">
-        <div class="info">
-            <h2>"Today, I consider myself the luckiest man on the face of the earth." -The Pride of the Yankees, 1942
-            </h2>
+<section id="edit-page">
+    <div class="editSection">
+        <div class="info-edit">
+            <h2>"One ring to rule them all, one ring to find them, one ring to bring them all and in the darkness bind
+                them."</h2>
         </div>
 
-        <form method="post" class="createForm">
-            <h2>Add Movie</h2>
-            {{#if errors}}
-            <p class="error">All fields are required!</p>
-            {{/if}}
+        <form method="post" class="editForm">
+            <h2>Edit Post</h2>
             <ul class="noBullet">
-                <li {{#if errors.title}}class="error" {{/if}}>
+               <li {{#if errors.title}}class="error" {{/if}}>
                     <label for="title">Title:</label>
                     <input type="text" class="inputFields" id="title" name="title" value="{{movie.title}}" />
                 </li>
@@ -46,7 +43,7 @@
                     <textarea id="description" class="inputFields" name="description">{{movie.description}}</textarea>
                 </li>
                 <li id="center-btn">
-                    <button id="create-btn">Add Movie</button>
+                    <button id="edit-btn">Save</button>
                 </li>
             </ul>
         </form>
