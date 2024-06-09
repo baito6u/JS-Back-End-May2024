@@ -26,4 +26,8 @@ module.exports = {
       return;
     }
   },
+  loginGetController: (req, res) => {
+    res.render("login");
+  },
+  loginPostController: (req, res) => {},
 };

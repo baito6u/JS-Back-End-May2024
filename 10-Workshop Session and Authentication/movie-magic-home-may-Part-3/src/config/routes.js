@@ -2,7 +2,7 @@ const { attachGetController, attachPostController } = require("../controllers/at
 const { createCastGetController, createCastPostController } = require("../controllers/castController");
 const { homeContoller, detailsController, createGetController, searchController, createPostController } = require("../controllers/movieController");
 const { aboutController, notFoundController } = require("../controllers/staticViewsController");
-const { registerGetController, registerPostController } = require("../controllers/userController");
+const { registerGetController, registerPostController, loginGetController, loginPostController } = require("../controllers/userController");
 
 
 const router = require("express").Router();
@@ -19,6 +19,8 @@ router.post('/create/cast', createCastPostController);
 router.get('/search', searchController);
 router.get('/register', registerGetController);
 router.post('/register', registerPostController);
+router.get('/login', loginGetController);
+router.post('/login', loginPostController);
 
 
 router.get('*', notFoundController)
