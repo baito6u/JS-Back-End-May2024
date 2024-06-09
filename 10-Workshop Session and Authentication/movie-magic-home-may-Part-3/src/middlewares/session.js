@@ -8,6 +8,10 @@ function session() {
       try {
         const payload = verifyToken(token);
         req.user = payload;
+
+        //injecting hasUser in handlebars
+        res.locals.hasUser = true;
+        
       } catch (error) {
         res.clearCookie("token");
       }
