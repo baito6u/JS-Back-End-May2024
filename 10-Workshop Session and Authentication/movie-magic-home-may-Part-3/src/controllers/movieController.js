@@ -9,6 +9,10 @@ module.exports = {
   homeContoller: async (req, res) => {
     const movies = await getAllMovies();
 
+    for (const movie of movies) {
+      movie.isAuthor = req.user && req.user._id == movie.author.toString();
+    }
+
     res.render("home", { movies });
   },
 
@@ -21,6 +25,8 @@ module.exports = {
       return;
     }
 
+    movie.isAuthor = req.user && req.user._id == movie.author.toString();
+    
     movie.starRating = "&#x2605;".repeat(movie.rating);
 
     res.render("details", { movie });

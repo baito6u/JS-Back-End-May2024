@@ -20,6 +20,12 @@
 
                 <p class="disc">Description: {{description}}</p>
             </div>
+            {{#if isAuthor}}
+            <div class="details-btn">
+                <a href="" id="edit-button">Edit</a>
+                <a href="" id="delete-button">Delete</a>
+            </div>
+            {{/if}}
         </div>
         <div class="card_right">
             <img src="{{imageURL}}" alt="{{title}}">
