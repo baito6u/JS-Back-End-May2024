@@ -5,7 +5,7 @@ module.exports = {
   registerGetController: (req, res) => {
     res.render("register");
   },
-  
+
   registerPostController: async (req, res) => {
     const { email, password, repass } = req.body;
 
@@ -49,5 +49,9 @@ module.exports = {
       res.render("login", { data: { email }, error: err.message });
       return;
     }
+  },
+  logoutController: (req, res) => {
+    res.clearCookie("token");
+    res.redirect("/");
   },
 };
