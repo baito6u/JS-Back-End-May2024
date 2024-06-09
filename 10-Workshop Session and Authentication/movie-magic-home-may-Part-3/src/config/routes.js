@@ -14,6 +14,8 @@ const {
   createPostController,
   editGetController,
   editPostController,
+  deleteGetController,
+  deletePostController,
 } = require("../controllers/movieController");
 const {
   aboutController,
@@ -42,6 +44,8 @@ router.get("/attach/:id", isUser(), attachGetController);
 router.post("/attach/:id", isUser(), attachPostController);
 router.get("/edit/:id", isUser(), editGetController);
 router.post("/edit/:id", isUser(), editPostController);
+router.get("/delete/:id", isUser(), deleteGetController);
+router.post("/delete/:id", isUser(), deletePostController);
 
 //for creatin movie/cast
 router.get("/create/movie", isUser(), createGetController);

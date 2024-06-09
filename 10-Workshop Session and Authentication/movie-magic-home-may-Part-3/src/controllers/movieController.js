@@ -4,6 +4,7 @@ const {
   createMovie,
   search,
   editMovie,
+  deleteMovie,
 } = require("../services/movieService");
 
 module.exports = {
@@ -124,4 +125,44 @@ module.exports = {
     }
     res.render("search", { movies, query: req.query });
   },
+
+  deleteGetController: async (req, res) => {
+    const movieId = req.params.id;
+    let movie = "";
+    try {
+      movie = await getMovieById(movieId);
+      if (!movie) {
+        throw new Error("Movie not found!");
+      }
+    } catch (error) {
+      res.render("404");
+      return;
+    }
+
+    const isAuthor = req.user._id == movie.author.toString();
+
+    if (!isAuthor) {
+      res.redirect("/login");
+      return;
+    }
+    res.render("delete", { movie });
+  },
+
+  deletePostController: async (req, res) => {
+    const movieId = req.params.id;
+    const authorId = req.user._id;
+
+    try {
+      await deleteMovie(movieId, authorId);
+      
+    } catch (error) {
+      if(error.message == "Access denied") {
+        res.redirect("/login")
+      } else {
+        res.render("404");
+      }
+      return;
+    }
+    res.redirect("/");
+  } 
 };
