@@ -1,0 +1,52 @@
+[
+  {
+    "id": "1",
+    "title": "Jungle Cuise",
+    "genre": "Adventure",
+    "director": "Rob Marshall",
+    "year": 2024,
+    "imageURL": "/static/img/jungle-cruise.jpeg",
+    "rating": 5,
+    "description": "Dreaming about saving countless lives and having another adventure, the feisty Englishfeminist and doctor of botany, Dr Lily Houghton, embarks on a peril-laden mission to change theworld. Along with her fashionable brother, MacGregor, Dr Houghton enlists the help of the arrogant,wisecracking riverboat skipper, Captain Frank Wolff, to guide them through the serpentine AmazonRiver in La Quila, his swift wooden boat. Now, as the intrepid trio ventures deeper and deeper intothe heart of an impenetrable green maze, searching for something that cannot be found, acenturies-old curse and the ruthless aristocrat, Prince Joachim, threaten to put an end to theirambitious plans."
+  },
+  {
+    "id": "2",
+    "title": "The-Litlle-Mermaid",
+    "genre": "Fantasy",
+    "director": "Rob Marshall",
+    "year": 2020,
+    "imageURL": "/static/img/the-little-mermaid.jpg",
+    "rating": 2,
+    "description": "The youngest of King Triton's daughters, Ariel is a beautiful and spirited young mermaidwith a thirst for adventure. Longing to find out more about the world beyond the sea, Ariel visitsthe surface and falls for the dashing Prince Eric. Following her heart, she makes a deal with theevil sea witch, Ursula, to experience life on land."
+  },
+  {
+    "id": "3",
+    "title": "Home-Alone",
+    "genre": "Comedy",
+    "director": "Rob Marshall",
+    "year": 1990,
+    "imageURL": "/static/img/home-alone.jpeg",
+    "rating": 5,
+    "description": "It is Christmas time and the McCallister family is preparing for a vacation in Paris,France. But the youngest in the family, Kevin (Macaulay Culkin), got into a scuffle with his olderbrother Buzz (Devin Ratray) and was sent to his room, which is on the third floor of his house.Then, the next morning, while the rest of the family was in a rush to make it to the airport ontime, they completely forgot about Kevin, who now has the house all to himself. Being home alone wasfun for Kevin, having a pizza all to himself, jumping on his parents' bed, and making a mess. Then,Kevin discovers about two burglars, Harry (Joe Pesci) and Marv (Daniel Stern), about to rob hishouse on Christmas Eve. Kevin acts quickly by wiring his own house with makeshift booby traps tostop the burglars and to bring them to justice."
+  },
+  {
+    "id": "0150-ac2e",
+    "title": "The Matrix",
+    "genre": "Fantasy",
+    "director": "Lana WachowskiLilly Wachowski",
+    "year": "1990",
+    "imageURL": "https://upload.wikimedia.org/wikipedia/en/c/c1/The_Matrix_Poster.jpg",
+    "rating": "5",
+    "description": "The Matrix is a 1999 science fiction action film[5][6] written and directed by the Wachowskis.[a] It is the first installment in the Matrix film series, starring Keanu Reeves, Laurence Fishburne, Carrie-Anne Moss, Hugo Weaving and Joe Pantoliano, and depicts a dystopian future in which humanity is unknowingly trapped inside the Matrix, a simulated reality that intelligent machines have created to distract humans while using their bodies as an energy source.[7] When computer programmer Thomas Anderson, under the hacker alias \"Neo\", uncovers the truth, he joins a rebellion against the machines along with other people who have been freed from the Matrix."
+  },
+  {
+    "id": "7a67-5714",
+    "title": "Dune",
+    "genre": "Fantasy",
+    "director": "Denis Villeneuve",
+    "year": "2021",
+    "imageURL": "https://upload.wikimedia.org/wikipedia/en/8/8e/Dune_%282021_film%29.jpg",
+    "rating": "5",
+    "description": "Dune (titled onscreen as Dune: Part One) is a 2021 American epic science fiction film directed and co-produced by Denis Villeneuve, who co-wrote the screenplay with Jon Spaihts, and Eric Roth. It is the first of a two-part adaptation of the 1965 novel of the same name by Frank Herbert. Set in the distant future, the film follows Paul Atreides as his family, the noble House Atreides, is thrust into a war for the deadly and inhospitable desert planet Arrakis. "
+  }
+]
