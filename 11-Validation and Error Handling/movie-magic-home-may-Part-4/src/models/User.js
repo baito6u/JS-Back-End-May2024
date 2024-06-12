@@ -1,10 +1,11 @@
-const {Schema, model} = require("mongoose");
+const { Schema, model } = require("mongoose");
 
 const userSchema = new Schema(
   {
     email: {
       type: String,
       required: true,
+      unique: true,
     },
     password: {
       type: String,
@@ -12,7 +13,9 @@ const userSchema = new Schema(
     },
   },
   {
-    collation: { locale: "en", strength: 2 },
+    collation: { 
+      locale: "en", 
+      strength: 2 },
   }
 );
 
