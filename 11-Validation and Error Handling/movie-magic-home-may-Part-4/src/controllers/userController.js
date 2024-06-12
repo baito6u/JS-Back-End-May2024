@@ -4,6 +4,7 @@ const { body, validationResult } = require("express-validator");
 const { register, login } = require("../services/userService");
 const { createToken } = require("../services/tokenService");
 const { isGuest } = require("../middlewares/guards");
+const { parseError } = require('../util');
 
 const userRouter = Router();
 
@@ -15,19 +16,25 @@ userRouter.post(
   "/register",
   isGuest(),
   body("email").trim().isEmail().withMessage("Please enter a valid email"),
-  body("password").trim().isAlphanumeric().isLength({min: 6}).withMessage("Password must be at least 6 charecters long and contain only English letters and numbers"),
-  body("repass").trim().custom((value, {req}) => value == req.body.password).withMessage("Passwords don't match"),
+  body("password")
+    .trim()
+    .isAlphanumeric()
+    .isLength({ min: 6 })
+    .withMessage(
+      "Password must be at least 6 charecters long and contain only English letters and numbers"
+    ),
+  body("repass")
+    .trim()
+    .custom((value, { req }) => value == req.body.password)
+    .withMessage("Passwords don't match"),
   async (req, res) => {
-    const { email, password, repass } = req.body;
+    const { email, password } = req.body;
 
     try {
       const result = validationResult(req);
 
-      if(result.errors.length) {
-        const err = new Error("Input validation error");
-        err.errors = Object.fromEntries(result.errors.map(e => [e.path, e.msg]));
-
-        throw err;
+      if (result.errors.length) {
+        throw result.errors;
       }
 
       const user = await register(email, password);
@@ -36,7 +43,10 @@ userRouter.post(
       res.cookie("token", token, { httpOnly: true });
       res.redirect("/");
     } catch (err) {
-      res.render("register", { data: { email }, errors: err.errors });
+      res.render("register", {
+        data: { email },
+        errors: parseError(err).errors,
+      });
       return;
     }
   }
