@@ -21,17 +21,13 @@ const {
   aboutController,
   notFoundController,
 } = require("../controllers/staticViewsController");
-const {
-  registerGetController,
-  registerPostController,
-  loginGetController,
-  loginPostController,
-  logoutController,
-} = require("../controllers/userController");
+const { userRouter } = require("../controllers/userController");
 
 const { isGuest, isUser } = require("../middlewares/guards");
 
 const router = require("express").Router();
+
+function configRoutes(app) {}
 
 //common
 router.get("/", homeContoller);
@@ -54,11 +50,7 @@ router.get("/create/cast", isUser(), createCastGetController);
 router.post("/create/cast", isUser(), createCastPostController);
 
 //user
-router.get("/register", isGuest(), registerGetController);
-router.post("/register", isGuest(), registerPostController);
-router.get("/login", isGuest(), loginGetController);
-router.post("/login", isGuest(), loginPostController);
-router.get("/logout", logoutController);
+router.use(userRouter);
 
 //all other
 router.get("*", notFoundController);
