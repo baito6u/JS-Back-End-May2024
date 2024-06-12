@@ -4,6 +4,8 @@ const movieSchema = new Schema({
   title: {
     type: String,
     required: true,
+    minLength: [5, 'Title must be at least 5 charecters long!'],
+    match: [/^[a-z0-9]+$/gi, "Title may only contain english letters, spaces and numbers!"]
   },
   genre: {
     type: String,
@@ -28,6 +30,7 @@ const movieSchema = new Schema({
   description: {
     type: String,
     required: true,
+    minLength: 20,
     maxLength: 1000,
   },
   imageURL: {

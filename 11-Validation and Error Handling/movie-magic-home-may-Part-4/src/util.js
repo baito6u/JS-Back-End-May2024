@@ -6,7 +6,7 @@ function parseError(err) {
         }
         
         // TODO parse Mongoose validation errors here
-
+    
     } else if(Array.isArray(err)) {
         // Express-validator error array
         const error = new Error("Input validation error");
