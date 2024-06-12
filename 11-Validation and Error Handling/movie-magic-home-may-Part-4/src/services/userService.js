@@ -7,7 +7,9 @@ async function register(email, password) {
   const existingUser = await User.findOne({ email });
 
     if (existingUser) {
-      throw new Error("Email is already used");
+      const err = new Error("Email is already used");
+      err.errors = { email: "Email is already used"};
+      throw err;
     }
 
   // create DB record
