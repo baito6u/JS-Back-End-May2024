@@ -1,7 +1,4 @@
-const {
-  attachGetController,
-  attachPostController,
-} = require("../controllers/attachController");
+const { attachRouter } = require("../controllers/attachController");
 const {
   createCastGetController,
   createCastPostController,
@@ -15,16 +12,12 @@ const { userRouter } = require("../controllers/userController");
 
 const { isGuest, isUser } = require("../middlewares/guards");
 
-
 function configRoutes(app) {
-
   app.get("/about", aboutController);
 
   app.use(movieRouter);
   app.use(userRouter);
-
-  app.get("/attach/:id", isUser(), attachGetController);
-  app.post("/attach/:id", isUser(), attachPostController);
+  app.use(attachRouter);
 
   //for creatin movie/cast
 
