@@ -1,3 +1,5 @@
+ const { Router } = require('express');
+
 const {
   getAllMovies,
   getMovieById,
@@ -7,162 +9,170 @@ const {
   deleteMovie,
 } = require("../services/movieService");
 
-module.exports = {
-  homeContoller: async (req, res) => {
-    const movies = await getAllMovies();
+const { isUser } = require("../middlewares/guards");
 
-    for (const movie of movies) {
-      movie.isAuthor = req.user && req.user._id == movie.author.toString();
-    }
 
-    res.render("home", { movies });
-  },
+const movieRouter = Router();
 
-  detailsController: async (req, res) => {
-    const id = req.params.id;
-    const movie = await getMovieById(id);
+module.exports = { movieRouter };
 
-    if (!movie) {
-      res.render("404");
-      return;
-    }
+movieRouter.get("/", async (req, res) => {
+  const movies = await getAllMovies();
 
+  for (const movie of movies) {
     movie.isAuthor = req.user && req.user._id == movie.author.toString();
+  }
 
-    movie.starRating = "&#x2605;".repeat(movie.rating);
+  res.render("home", { movies });
+});
 
-    res.render("details", { movie });
-  },
+movieRouter.get("/details/:id", async (req, res) => {
+  const id = req.params.id;
+  const movie = await getMovieById(id);
 
-  createGetController: (req, res) => {
-    res.render("create");
-  },
+  if (!movie) {
+    res.render("404");
+    return;
+  }
 
-  createPostController: async (req, res) => {
-    const authorId = req.user._id;
+  movie.isAuthor = req.user && req.user._id == movie.author.toString();
 
-    const errors = {
-      title: !req.body.title,
-      genre: !req.body.genre,
-      director: !req.body.director,
-      year: !req.body.year,
-      imageURL: !req.body.imageURL,
-      rating: !req.body.rating,
-      description: !req.body.description,
-    };
+  movie.starRating = "&#x2605;".repeat(movie.rating);
 
-    if (Object.values(errors).includes(true)) {
-      res.render("create", { movie: req.body, errors });
-      return;
+  res.render("details", { movie });
+});
+
+movieRouter.get("/create/movie", isUser(), (req, res) => {
+  res.render("create");
+});
+
+movieRouter.post("/create/movie", isUser(), async (req, res) => {
+  const authorId = req.user._id;
+
+  const errors = {
+    title: !req.body.title,
+    genre: !req.body.genre,
+    director: !req.body.director,
+    year: !req.body.year,
+    imageURL: !req.body.imageURL,
+    rating: !req.body.rating,
+    description: !req.body.description,
+  };
+
+  if (Object.values(errors).includes(true)) {
+    res.render("create", { movie: req.body, errors });
+    return;
+  }
+
+  const result = await createMovie(req.body, authorId);
+
+  res.redirect("/details/" + result._id);
+});
+
+movieRouter.get("/edit/:id", isUser(), async (req, res) => {
+  const movieId = req.params.id;
+  let movie = "";
+  try {
+    movie = await getMovieById(movieId);
+    if (!movie) {
+      throw new Error("Movie not found!");
     }
+  } catch (error) {
+    res.render("404");
+    return;
+  }
 
-    const result = await createMovie(req.body, authorId);
+  const isAuthor = req.user._id == movie.author.toString();
 
-    res.redirect("/details/" + result._id);
-  },
+  if (!isAuthor) {
+    res.redirect("/login");
+    return;
+  }
+  res.render("edit", { movie });
+});
 
-  editGetController: async (req, res) => {
-    const movieId = req.params.id;
-    let movie = "";
-    try {
-      movie = await getMovieById(movieId);
-      if (!movie) {
-        throw new Error("Movie not found!");
-      }
-    } catch (error) {
+
+movieRouter.post("/edit/:id", isUser(),  async (req, res) => {
+  const movieId = req.params.id;
+  const authorId = req.user._id;
+
+  const errors = {
+    title: !req.body.title,
+    genre: !req.body.genre,
+    director: !req.body.director,
+    year: !req.body.year,
+    imageURL: !req.body.imageURL,
+    rating: !req.body.rating,
+    description: !req.body.description,
+  };
+
+  if (Object.values(errors).includes(true)) {
+    res.render("edit", { movie: req.body, errors });
+    return;
+  }
+
+  try {
+    await editMovie(movieId, req.body, authorId);
+    
+  } catch (error) {
+    if(error.message == "Access denied") {
+      res.redirect("/login")
+    } else {
       res.render("404");
-      return;
     }
+    return;
+  }
+  res.redirect("/details/" + movieId);
+});
 
-    const isAuthor = req.user._id == movie.author.toString();
+movieRouter.get("/search", async (req, res) => {
+  const movies = await search(req.query);
 
-    if (!isAuthor) {
-      res.redirect("/login");
-      return;
+  if (!movies) {
+    res.render("404");
+    return;
+  }
+  res.render("search", { movies, query: req.query });
+});
+
+
+movieRouter.get("/delete/:id", isUser(), async (req, res) => {
+  const movieId = req.params.id;
+  let movie = "";
+  try {
+    movie = await getMovieById(movieId);
+    if (!movie) {
+      throw new Error("Movie not found!");
     }
-    res.render("edit", { movie });
-  },
+  } catch (error) {
+    res.render("404");
+    return;
+  }
 
-  editPostController: async (req, res) => {
-    const movieId = req.params.id;
-    const authorId = req.user._id;
+  const isAuthor = req.user._id == movie.author.toString();
 
-    const errors = {
-      title: !req.body.title,
-      genre: !req.body.genre,
-      director: !req.body.director,
-      year: !req.body.year,
-      imageURL: !req.body.imageURL,
-      rating: !req.body.rating,
-      description: !req.body.description,
-    };
+  if (!isAuthor) {
+    res.redirect("/login");
+    return;
+  }
+  res.render("delete", { movie });
+});
 
-    if (Object.values(errors).includes(true)) {
-      res.render("edit", { movie: req.body, errors });
-      return;
-    }
+movieRouter.post("/delete/:id", isUser(), async (req, res) => {
+  const movieId = req.params.id;
+  const authorId = req.user._id;
 
-    try {
-      await editMovie(movieId, req.body, authorId);
-      
-    } catch (error) {
-      if(error.message == "Access denied") {
-        res.redirect("/login")
-      } else {
-        res.render("404");
-      }
-      return;
-    }
-    res.redirect("/details/" + movieId);
-  },
-
-  searchController: async (req, res) => {
-    const movies = await search(req.query);
-
-    if (!movies) {
+  try {
+    await deleteMovie(movieId, authorId);
+    
+  } catch (error) {
+    if(error.message == "Access denied") {
+      res.redirect("/login")
+    } else {
       res.render("404");
-      return;
     }
-    res.render("search", { movies, query: req.query });
-  },
+    return;
+  }
+  res.redirect("/");
+});
 
-  deleteGetController: async (req, res) => {
-    const movieId = req.params.id;
-    let movie = "";
-    try {
-      movie = await getMovieById(movieId);
-      if (!movie) {
-        throw new Error("Movie not found!");
-      }
-    } catch (error) {
-      res.render("404");
-      return;
-    }
-
-    const isAuthor = req.user._id == movie.author.toString();
-
-    if (!isAuthor) {
-      res.redirect("/login");
-      return;
-    }
-    res.render("delete", { movie });
-  },
-
-  deletePostController: async (req, res) => {
-    const movieId = req.params.id;
-    const authorId = req.user._id;
-
-    try {
-      await deleteMovie(movieId, authorId);
-      
-    } catch (error) {
-      if(error.message == "Access denied") {
-        res.redirect("/login")
-      } else {
-        res.render("404");
-      }
-      return;
-    }
-    res.redirect("/");
-  } 
-};

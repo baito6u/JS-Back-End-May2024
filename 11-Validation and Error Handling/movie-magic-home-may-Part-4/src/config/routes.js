@@ -6,17 +6,7 @@ const {
   createCastGetController,
   createCastPostController,
 } = require("../controllers/castController");
-const {
-  homeContoller,
-  detailsController,
-  createGetController,
-  searchController,
-  createPostController,
-  editGetController,
-  editPostController,
-  deleteGetController,
-  deletePostController,
-} = require("../controllers/movieController");
+const { movieRouter } = require("../controllers/movieController");
 const {
   aboutController,
   notFoundController,
@@ -25,34 +15,24 @@ const { userRouter } = require("../controllers/userController");
 
 const { isGuest, isUser } = require("../middlewares/guards");
 
-const router = require("express").Router();
 
-function configRoutes(app) {}
+function configRoutes(app) {
 
-//common
-router.get("/", homeContoller);
-router.get("/about", aboutController);
-router.get("/search", searchController);
+  app.get("/about", aboutController);
 
-//a specific movie
-router.get("/details/:id", detailsController);
-router.get("/attach/:id", isUser(), attachGetController);
-router.post("/attach/:id", isUser(), attachPostController);
-router.get("/edit/:id", isUser(), editGetController);
-router.post("/edit/:id", isUser(), editPostController);
-router.get("/delete/:id", isUser(), deleteGetController);
-router.post("/delete/:id", isUser(), deletePostController);
+  app.use(movieRouter);
+  app.use(userRouter);
 
-//for creatin movie/cast
-router.get("/create/movie", isUser(), createGetController);
-router.post("/create/movie", isUser(), createPostController);
-router.get("/create/cast", isUser(), createCastGetController);
-router.post("/create/cast", isUser(), createCastPostController);
+  app.get("/attach/:id", isUser(), attachGetController);
+  app.post("/attach/:id", isUser(), attachPostController);
 
-//user
-router.use(userRouter);
+  //for creatin movie/cast
 
-//all other
-router.get("*", notFoundController);
+  app.get("/create/cast", isUser(), createCastGetController);
+  app.post("/create/cast", isUser(), createCastPostController);
 
-module.exports = { router };
+  //all other
+  app.get("*", notFoundController);
+}
+
+module.exports = { configRoutes };
