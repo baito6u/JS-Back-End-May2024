@@ -1,4 +1,4 @@
-const { Router } = require('express');
+const { Router } = require("express");
 
 const {
   getAllMovies,
@@ -11,10 +11,7 @@ const {
 
 const { isUser } = require("../middlewares/guards");
 
-
 const movieRouter = Router();
-
-module.exports = { movieRouter };
 
 movieRouter.get("/", async (req, res) => {
   const movies = await getAllMovies();
@@ -91,8 +88,7 @@ movieRouter.get("/edit/:id", isUser(), async (req, res) => {
   res.render("edit", { movie });
 });
 
-
-movieRouter.post("/edit/:id", isUser(),  async (req, res) => {
+movieRouter.post("/edit/:id", isUser(), async (req, res) => {
   const movieId = req.params.id;
   const authorId = req.user._id;
 
@@ -113,10 +109,9 @@ movieRouter.post("/edit/:id", isUser(),  async (req, res) => {
 
   try {
     await editMovie(movieId, req.body, authorId);
-    
   } catch (error) {
-    if(error.message == "Access denied") {
-      res.redirect("/login")
+    if (error.message == "Access denied") {
+      res.redirect("/login");
     } else {
       res.render("404");
     }
@@ -134,7 +129,6 @@ movieRouter.get("/search", async (req, res) => {
   }
   res.render("search", { movies, query: req.query });
 });
-
 
 movieRouter.get("/delete/:id", isUser(), async (req, res) => {
   const movieId = req.params.id;
@@ -164,10 +158,9 @@ movieRouter.post("/delete/:id", isUser(), async (req, res) => {
 
   try {
     await deleteMovie(movieId, authorId);
-    
   } catch (error) {
-    if(error.message == "Access denied") {
-      res.redirect("/login")
+    if (error.message == "Access denied") {
+      res.redirect("/login");
     } else {
       res.render("404");
     }
@@ -176,3 +169,4 @@ movieRouter.post("/delete/:id", isUser(), async (req, res) => {
   res.redirect("/");
 });
 
+module.exports = { movieRouter };

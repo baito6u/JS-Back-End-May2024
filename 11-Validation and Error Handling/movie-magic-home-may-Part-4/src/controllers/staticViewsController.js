@@ -1,8 +1,13 @@
-module.exports = {
-  aboutController: (req, res) => {
-    res.render("about");
-  },
-  notFoundController: (req, res) => {
-    res.render("404");
-  },
-};
+const { Router } = require("express");
+
+const staticViewsRouter = Router();
+
+staticViewsRouter.get("/about", (req, res) => {
+  res.render("about");
+});
+
+staticViewsRouter.get("*", (req, res) => {
+  res.render("404");
+});
+
+module.exports = { staticViewsRouter };
