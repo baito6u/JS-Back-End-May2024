@@ -1,26 +1,37 @@
-const express = require('express');
-const handlebars = require('express-handlebars');
+const express = require("express");
+const handlebars = require("express-handlebars");
+const mongoose = require("mongoose");
 
-const routes = require('./routes');
-
+const routes = require("./routes");
 
 const app = express();
 
 const PORT = 3000;
 
-app.use(express.static('static'));
-app.use(express.urlencoded({extended: false}));
+app.use(express.static("static"));
+app.use(express.urlencoded({ extended: false }));
 
-app.engine('hbs', handlebars.engine({
-    extname: 'hbs',
-}));
+app.engine(
+  "hbs",
+  handlebars.engine({
+    extname: "hbs",
+  })
+);
 
-app.set('view engine', 'hbs');
+app.set("view engine", "hbs");
 
 app.use(routes);
 
-app.get('/', (req, res) => {
-    res.send("Hello world");
+//TODO change database name
+mongoose.connect("mongodb://localhost:27017/course-book");
+mongoose.connection.on("connected", () => console.log("DB is connected"));
+mongoose.connection.on("disconnected", () => console.log("DB is disconnected"));
+mongoose.connection.on("error", (err) => console.log(err));
+
+app.get("/", (req, res) => {
+  res.send("Hello world");
 });
 
-app.listen(PORT, () => console.log(`Server is listening on http://localhost:${PORT}`));
+app.listen(PORT, () =>
+  console.log(`Server is listening on http://localhost:${PORT}`)
+);
