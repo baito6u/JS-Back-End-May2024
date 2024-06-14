@@ -1,4 +1,4 @@
-const { register } = require('../services/authService');
+const { register, login } = require('../services/authService');
 
 const authRouter = require('express').Router();
 
@@ -12,6 +12,16 @@ authRouter.post('/register', async (req, res) => {
     await register(userData);
 
     res.redirect('/login');
+});
+
+authRouter.get('/login', (req, res) => {
+    res.render('login');
+});
+
+authRouter.post('/login', async (req, res) => {
+    const userData = req.body;
+
+    await login(userData);
 });
 
 module.exports = authRouter;
