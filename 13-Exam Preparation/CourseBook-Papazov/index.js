@@ -28,10 +28,6 @@ mongoose.connection.on("connected", () => console.log("DB is connected"));
 mongoose.connection.on("disconnected", () => console.log("DB is disconnected"));
 mongoose.connection.on("error", (err) => console.log(err));
 
-app.get("/", (req, res) => {
-  res.send("Hello world");
-});
-
 app.listen(PORT, () =>
   console.log(`Server is listening on http://localhost:${PORT}`)
 );
