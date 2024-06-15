@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const identityName = "email"; //TODO change "email" baased on exm description
 
 async function register(identity, password) {
-    const existingUser = await User.find({ [identityName]: identity });
+    const existingUser = await User.findOne({ [identityName]: identity });
 
     if (existingUser) {
         throw new Error(`This ${identityName} alredy in use!`)
