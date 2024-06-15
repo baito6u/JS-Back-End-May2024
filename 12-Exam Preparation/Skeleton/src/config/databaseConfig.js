@@ -12,3 +12,5 @@ async function databaseConfig() {
 
   console.log("Database connected");
 }
+
+module.exports = {databaseConfig}
