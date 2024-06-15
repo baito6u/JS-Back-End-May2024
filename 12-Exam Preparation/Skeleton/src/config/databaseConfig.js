@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
-//TODO importmodels
+
+require("../models/Data"); //TODO import real models 
+require("../models/User");
 
 async function databaseConfig() {
   //TODO change DB name
@@ -7,10 +9,10 @@ async function databaseConfig() {
 
   mongoose.connect(connectionString, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
   });
 
   console.log("Database connected");
 }
 
-module.exports = {databaseConfig}
+module.exports = { databaseConfig };
