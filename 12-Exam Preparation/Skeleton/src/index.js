@@ -4,6 +4,7 @@ const { expressConfig } = require("./config/expressConfig");
 const { hbsConfig } = require("./config/hbsConfig");
 const { routesConfig } = require("./config/routesConfig");
 const { register, login } = require("./services/userService");
+const { createToken, verifyToken } = require("./services/jwt");
 
 start();
 
@@ -24,8 +25,15 @@ async function start() {
 
 async function testFunction() {
     try {
-        const result = await login("todor", "123456");
+        const result = await register("john", "123456");
         console.log(result);
+
+        const token = createToken(result);
+        console.log(token);
+
+        const parsedData = verifyToken(token);
+        console.log(parsedData);
+
     } catch (error) {
         console.log("Caught error");
         console.log(error.message);
