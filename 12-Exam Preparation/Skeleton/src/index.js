@@ -19,13 +19,13 @@ async function start() {
 
   app.listen(PORT, () => {
     console.log(`Server started on http://localhost:${PORT}`);
-    testFunction();
+    //testFunction();
   });
 }
 
 async function testFunction() {
     try {
-        const result = await register("john", "123456");
+        const result = await login("john", "123456");
         console.log(result);
 
         const token = createToken(result);
