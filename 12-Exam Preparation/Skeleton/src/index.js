@@ -19,23 +19,5 @@ async function start() {
 
   app.listen(PORT, () => {
     console.log(`Server started on http://localhost:${PORT}`);
-    //testFunction();
   });
-}
-
-async function testFunction() {
-    try {
-        const result = await login("john", "123456");
-        console.log(result);
-
-        const token = createToken(result);
-        console.log(token);
-
-        const parsedData = verifyToken(token);
-        console.log(parsedData);
-
-    } catch (error) {
-        console.log("Caught error");
-        console.log(error.message);
-    }
 }
