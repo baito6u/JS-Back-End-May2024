@@ -5,7 +5,7 @@ function hbsConfig(app) {
     extname: "hbs",
   });
 
-  app.engin("hbs", hbs.engine);
+  app.engine("hbs", hbs.engine);
   app.set("view engin", "hbs");
 }
 
