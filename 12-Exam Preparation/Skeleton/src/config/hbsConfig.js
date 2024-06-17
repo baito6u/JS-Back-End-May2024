@@ -6,7 +6,7 @@ function hbsConfig(app) {
   });
 
   app.engine("hbs", hbs.engine);
-  app.set("view engin", "hbs");
+  app.set("view engine", "hbs");
 }
 
 module.exports = { hbsConfig };
