@@ -5,7 +5,7 @@ const { createToken } = require("../services/jwt");
 const { register } = require("../services/userService");
 
 userRouter.get("/register", isGuest(), async (req, res) => {
-  res.render("/regiter");
+  res.render("register");
 });
 
 userRouter.post("/register", isGuest(), async (req, res) => {
