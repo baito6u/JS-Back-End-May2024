@@ -1,19 +1,22 @@
-const { Data } = require("../models/Data");
+const { Stone } = require("../models/Stone");
 
 //TODO replace with real data service according exam description
+async function getRecent() {
+  return Stone.find().sort({ $natural: -1 }).limit(3).lean();
+}
 
 async function getAll() {
-  return Data.find().lean();
+  return Stone.find().lean();
 }
 
 async function getById(id) {
-  return Data.findById(id).lean();
+  return Stone.findById(id).lean();
 }
 
 async function create(data, authorId) {
   //TODO extract properties from Data model
 
-  const record = new Data({
+  const record = new Stone({
     prop: data.prop,
     author: authorId,
   });
@@ -24,13 +27,13 @@ async function create(data, authorId) {
 }
 
 async function update(id, data, userId) {
-  const record = await Data.findById(id);
+  const record = await Stone.findById(id);
 
   if (!record) {
     throw new ReferenceError("Record not found!" + id);
   }
 
-  if(record.author.toString() != userId) {
+  if (record.author.toString() != userId) {
     throw new Error("Access denied!");
   }
 
@@ -43,23 +46,24 @@ async function update(id, data, userId) {
 }
 
 async function deleteById(id, userId) {
-    const record = await Data.findById(id);
+  const record = await Stone.findById(id);
 
   if (!record) {
     throw new ReferenceError("Record not found!" + id);
   }
 
-  if(record.author.toString() != userId) {
+  if (record.author.toString() != userId) {
     throw new Error("Access denied!");
   }
 
-  await Data.findByIdAndDelete(id);
+  await Stone.findByIdAndDelete(id);
 }
 
 module.exports = {
-    getAll,
-    getById,
-    create,
-    update,
-    deleteById,
-}
+  getRecent,
+  getAll,
+  getById,
+  create,
+  update,
+  deleteById,
+};
