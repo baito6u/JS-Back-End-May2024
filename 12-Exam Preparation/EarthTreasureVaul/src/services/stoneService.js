@@ -14,10 +14,14 @@ async function getById(id) {
 }
 
 async function create(data, authorId) {
-  //TODO extract properties from Data model
-
   const record = new Stone({
-    prop: data.prop,
+    name: data.name,
+    category: data.category,
+    color: data.color,
+    image: data.image,
+    location: data.location,
+    formula: data.formula,
+    description: data.description,
     author: authorId,
   });
 
@@ -37,13 +41,20 @@ async function update(id, data, userId) {
     throw new Error("Access denied!");
   }
 
-  //TODO replace with real propperties
-  record.prop = data.prop;
+  record.name = data.name;
+  record.category = data.category;
+  record.color = data.color;
+  record.image = data.image;
+  record.location = data.location;
+  record.formula = data.formula;
+  record.description = data.description;
 
   await record.save();
 
   return record;
 }
+
+//TODO add function to only update likes
 
 async function deleteById(id, userId) {
   const record = await Stone.findById(id);
