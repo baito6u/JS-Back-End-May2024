@@ -1,8 +1,6 @@
-const { getRecent } = require("../services/stoneService");
-
 const homeRouter = require("express").Router();
 
-//TODO replace with real router according exam description
+const { getRecent } = require("../services/stoneService");
 
 homeRouter.get("/", async (req, res) => {
   const stones = await getRecent();
