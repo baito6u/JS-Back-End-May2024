@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
-require("../models/Data"); //TODO import real models 
+require("../models/Stone"); 
 require("../models/User");
 
 async function databaseConfig() {
   //TODO change DB name
-  const connectionString = "mongodb://localhost:27017/exam-db";
+  const connectionString = "mongodb://localhost:27017/earth-treasure";
 
   mongoose.connect(connectionString);
 
