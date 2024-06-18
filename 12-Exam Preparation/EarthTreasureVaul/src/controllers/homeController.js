@@ -1,13 +1,11 @@
-const { createToken } = require("../services/jwt");
-const { login } = require("../services/userService");
-
 const homeRouter = require("express").Router();
 
 //TODO replace with real router according exam description
-homeRouter.get("/", async (req, res) => {
-    
 
-    res.render("home");
-})
+homeRouter.get("/", (req, res) => {
+  const minerals = [1, 2, 3, 4];
+
+  res.render("home", { minerals });
+});
 
 module.exports = { homeRouter };

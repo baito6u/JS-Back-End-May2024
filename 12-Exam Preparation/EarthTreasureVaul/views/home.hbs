@@ -9,6 +9,7 @@
 </section>
 
 <section id="last-added">
+  {{#each minerals}}
   <div>
     <img src="./static/images/amethyst.jpg" />
     <p>Name: Amethyst</p>
@@ -27,6 +28,7 @@
     <p>Category: Silicate mineral</p>
     <a class="details-btn" href="#">Details</a>
   </div>
-
-  <!-- <p class="no-post">There are no gems and minerals!</p> -->
+  {{else}}
+  <p class="no-post">There are no gems and minerals!</p>
+  {{/each}}
 </section>
