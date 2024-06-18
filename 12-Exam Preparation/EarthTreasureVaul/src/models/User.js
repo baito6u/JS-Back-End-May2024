@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
 
-//TODO replace with User model from exam description
-
 const userSchema = new mongoose.Schema(
   {
     email: {

@@ -1,7 +1,7 @@
 const { User } = require("../models/User");
 const bcrypt = require("bcrypt");
 
-const identityName = "email"; //TODO change "email" baased on exm description
+const identityName = "email";
 
 async function register(identity, password) {
   const existingUser = await User.findOne({ [identityName]: identity });
