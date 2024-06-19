@@ -17,11 +17,14 @@ homeRouter.get("/catalog", async (req, res) => {
 homeRouter.get("/catalog/:id", async (req, res) => {
   const stone = await getById(req.params.id);
 
-  if(!stone) {
+  if (!stone) {
     res.render("404");
   }
 
-  res.render("details", { stone });
+  const isOwner = req.user?._id == stone.author.toString();
+  const hasLiked = Boolean(stone.likes.find((l) => req.user?._id == l.toString()));
+
+  res.render("details", { stone, isOwner, hasLiked });
 });
 
 module.exports = { homeRouter };
