@@ -1,25 +1,45 @@
 const userRouter = require("express").Router();
+const { body, validationResult } = require("express-validator");
 
 const { isGuest } = require("../middlewares/guards");
 const { createToken } = require("../services/jwt");
 const { register } = require("../services/userService");
+const { parseError } = require("../utils");
 
 userRouter.get("/register", isGuest(), async (req, res) => {
   res.render("register");
 });
 
-userRouter.post("/register", isGuest(), async (req, res) => {
-  const { email, password } = req.body;
+userRouter.post(
+  "/register",
+  isGuest(),
+  body("email").trim().isEmail().isLength({ min: 10 }).withMessage("Email must me at leas 10 charecters long!"),
+  body("password").trim().isLength({ min: 4 }).withMessage("Password must me at leas 4 charecters long!"),
+  body("repass")
+    .trim()
+    .custom((value, { req }) => value == req.body.password)
+    .withMessage("Passwords don't match!"),
+  async (req, res) => {
+    const { email, password } = req.body;
 
-  try {
-    //TODO add validation
-    const result = await register(email, password);
-    const token = createToken(result);
+    try {
+      const validation = validationResult(req);
+      if (validation.errors.length) {
+        throw validation.errors;
+      }
 
-    res.cookie("token", token);
-  } catch (error) {
-    res.render("register", { data: { email }, errors: error.errors });
+      const result = await register(email, password);
+      const token = createToken(result);
+
+      res.cookie("token", token);
+      res.redirect("/");
+    } catch (err) {
+      res.render("register", {
+        data: { email },
+        errors: parseError(err).errors,
+      });
+    }
   }
-});
+);
 
 module.exports = { userRouter };
