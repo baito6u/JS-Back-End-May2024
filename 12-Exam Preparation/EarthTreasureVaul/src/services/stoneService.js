@@ -1,6 +1,5 @@
 const { Stone } = require("../models/Stone");
 
-//TODO replace with real data service according exam description
 async function getRecent() {
   return Stone.find().sort({ $natural: -1 }).limit(3).lean();
 }
