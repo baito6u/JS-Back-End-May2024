@@ -19,6 +19,7 @@ homeRouter.get("/catalog/:id", async (req, res) => {
 
   if (!stone) {
     res.render("404");
+    return;
   }
 
   const isOwner = req.user?._id == stone.author.toString();
