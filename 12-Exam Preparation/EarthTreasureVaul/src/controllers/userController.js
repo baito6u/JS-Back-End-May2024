@@ -54,32 +54,35 @@ userRouter.get("/login", isGuest(), async (req, res) => {
 });
 
 userRouter.post(
-    "/login",
-    isGuest(),
-    body("email")
-      .trim(),
-    body("password")
-      .trim(),
-    body("repass")
-      .trim()
-      .custom((value, { req }) => value == req.body.password)
-      .withMessage("Passwords don't match!"),
-    async (req, res) => {
-      const { email, password } = req.body;
-  
-      try {
-        const result = await login(email, password);
-        const token = createToken(result);
-  
-        res.cookie("token", token);
-        res.redirect("/");
-      } catch (err) {
-        res.render("login", {
-          data: { email },
-          errors: parseError(err).errors,
-        });
-      }
+  "/login",
+  isGuest(),
+  body("email").trim(),
+  body("password").trim(),
+  body("repass")
+    .trim()
+    .custom((value, { req }) => value == req.body.password)
+    .withMessage("Passwords don't match!"),
+  async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+      const result = await login(email, password);
+      const token = createToken(result);
+
+      res.cookie("token", token);
+      res.redirect("/");
+    } catch (err) {
+      res.render("login", {
+        data: { email },
+        errors: parseError(err).errors,
+      });
     }
-  );
+  }
+);
+
+userRouter.get("/logout", async (req, res) => {
+  res.clearCookie("token");
+  res.redirect("/");
+});
 
 module.exports = { userRouter };
