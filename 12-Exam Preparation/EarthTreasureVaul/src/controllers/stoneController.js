@@ -2,7 +2,12 @@ const stoneRouter = require("express").Router();
 
 const { body, validationResult } = require("express-validator");
 const { isUser } = require("../middlewares/guards");
-const { create, getById, update } = require("../services/stoneService");
+const {
+  create,
+  getById,
+  update,
+  deleteById,
+} = require("../services/stoneService");
 const { parseError } = require("../utils");
 
 stoneRouter.get("/create", isUser(), async (req, res) => {
@@ -67,7 +72,7 @@ stoneRouter.get("/edit/:id", isUser(), async (req, res) => {
 
   const isOwner = req.user._id == stone.author.toString();
 
-  if(!isOwner) {
+  if (!isOwner) {
     res.redirect("/login");
     return;
   }
@@ -114,7 +119,7 @@ stoneRouter.post(
         throw validation.errors;
       }
 
-      const result = await update(stoneId, req.body, userId );
+      const result = await update(stoneId, req.body, userId);
 
       res.redirect("/catalog/" + stoneId);
     } catch (err) {
@@ -125,5 +130,18 @@ stoneRouter.post(
     }
   }
 );
+
+stoneRouter.get("/delete/:id", isUser(), async (req, res) => {
+  const stoneId = req.params.id;
+  const userId = req.user._id;
+
+  try {
+    const result = await deleteById(stoneId, userId);
+
+    res.redirect("/");
+  } catch (err) {
+    res.redirect("/catalog" + stoneId);
+  }
+});
 
 module.exports = { stoneRouter };
