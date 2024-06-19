@@ -7,6 +7,7 @@ const {
   getById,
   update,
   deleteById,
+  likeStone,
 } = require("../services/stoneService");
 const { parseError } = require("../utils");
 
@@ -130,6 +131,19 @@ stoneRouter.post(
     }
   }
 );
+
+stoneRouter.get("/like/:id", isUser(), async (req, res) => {
+  const stoneId = req.params.id;
+  const userId = req.user._id;
+
+  try {
+    const result = await likeStone(stoneId, userId);
+
+    res.redirect("/catalog/" + stoneId);
+  } catch (err) {
+    res.redirect("/");
+  }
+});
 
 stoneRouter.get("/delete/:id", isUser(), async (req, res) => {
   const stoneId = req.params.id;
