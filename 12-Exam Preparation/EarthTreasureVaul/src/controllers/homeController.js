@@ -30,4 +30,8 @@ homeRouter.get("/catalog/:id", async (req, res) => {
   res.render("details", { stone, isOwner, hasLiked });
 });
 
+homeRouter.get("*", async (req, res) => {
+  res.render("404");
+});
+
 module.exports = { homeRouter };
