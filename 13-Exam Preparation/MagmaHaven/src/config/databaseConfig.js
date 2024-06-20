@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-require("../models/Data"); //TODO import real models
+require("../models/Data");
 require("../models/User");
 
 async function databaseConfig() {
