@@ -1,9 +1,9 @@
 const { User } = require("../models/User");
 const bcrypt = require("bcrypt");
 
-const identityName = "email"; //TODO change "email" baased on exm description
+const identityName = "email";
 
-async function register(identity, password) {
+async function register(identity, username, password) {
   const existingUser = await User.findOne({ [identityName]: identity });
 
   if (existingUser) {
@@ -12,6 +12,7 @@ async function register(identity, password) {
 
   const user = new User({
     [identityName]: identity,
+    username,
     password: await bcrypt.hash(password, 10),
   });
 
