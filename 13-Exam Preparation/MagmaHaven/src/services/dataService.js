@@ -52,7 +52,23 @@ async function update(id, data, userId) {
   return record;
 }
 
-//TODO add voting method
+async function addVote(dataId, userId) {
+  const record = await Data.findById(dataId);
+
+  if(!record) {
+    throw new ReferanceError("Record not found" + dataId);
+  }
+
+  if ( record.author.toString() == userId) {
+    throw new Error("Cannot vote for your own publication!");
+  }
+
+  record.voteList.push(userId);
+
+  await record.sace();
+
+  return record;
+}
 
 async function deleteById(id, userId) {
   const record = await Data.findById(id);
@@ -73,5 +89,6 @@ module.exports = {
   getById,
   create,
   update,
+  addVote,
   deleteById,
 };
