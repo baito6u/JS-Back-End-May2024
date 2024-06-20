@@ -1,6 +1,6 @@
 const cookieParser = require("cookie-parser");
 const express = require("express");
-const { session } = require("../../middlewares/session");
+const { session } = require("../middlewares/session");
 
 const secret = "cookie secret";
 
