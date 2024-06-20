@@ -34,9 +34,11 @@
         {{#if errors}}
         <div>
             <div class="errorContainer">
-                {{#each errors}}
-                <p>{{this}}</p>
-                {{/each}}
+                <p>
+                    {{#each errors}}
+                    {{this}}<br>
+                    {{/each}}
+                </p>
             </div>
         </div>
         {{/if}}
