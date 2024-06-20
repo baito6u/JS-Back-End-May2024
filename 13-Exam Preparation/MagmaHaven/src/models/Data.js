@@ -32,13 +32,17 @@ const dataSchema = new mongoose.Schema({
   },
   voteList: {
     type: [mongoose.Types.ObjectId],
-    ref: "User",
+    required: true,
     default: [],
   },
   author: {
     type: mongoose.Types.ObjectId,
     ref: "User",
   },
+});
+
+dataSchema.virtual("votes").get(function(){
+  return this.voteList.length;
 });
 
 const Data = mongoose.model("Data", dataSchema);
