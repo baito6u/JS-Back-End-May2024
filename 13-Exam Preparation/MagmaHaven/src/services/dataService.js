@@ -9,7 +9,6 @@ async function getById(id) {
 }
 
 async function create(data, authorId) {
-  //TODO extract properties from Data model
 
   const record = new Data({
     name: data.name,
@@ -52,20 +51,26 @@ async function update(id, data, userId) {
   return record;
 }
 
+//TODO add search method
+
 async function addVote(dataId, userId) {
   const record = await Data.findById(dataId);
 
-  if(!record) {
+  if (!record) {
     throw new ReferanceError("Record not found" + dataId);
   }
 
-  if ( record.author.toString() == userId) {
+  if (record.author.toString() == userId) {
     throw new Error("Cannot vote for your own publication!");
+  }
+
+  if (record.voteList.find((v) => v.toString() == userId)) {
+    throw new Error("Only one vote is allowd per volcano!");
   }
 
   record.voteList.push(userId);
 
-  await record.sace();
+  await record.save();
 
   return record;
 }
