@@ -41,10 +41,6 @@ const dataSchema = new mongoose.Schema({
   },
 });
 
-dataSchema.virtual("votes").get(function(){
-  return this.voteList.length;
-});
-
 const Data = mongoose.model("Data", dataSchema);
 
 module.exports = { Data };
