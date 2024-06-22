@@ -45,7 +45,7 @@ userRouter.post(
   body("username").trim().isLength({ min: 2 }),
   body("email").trim().isLength({ min: 10 }).isEmail(),
   body("password").trim().isLength({ min: 4 }),
-  body("repas")
+  body("repass")
     .trim()
     .custom((value, { req }) => value == req.body.password)
     .withMessage("Passwords don't match!"),
@@ -55,9 +55,10 @@ userRouter.post(
     try {
       const validation = validationResult(req);
 
-      if (validation.errors.isLength) {
+      if (validation.errors.length) {
         throw validation.errors;
       }
+      
       const result = await register(username, email, password);
       const token = createToken(result);
       res.cookie("token", token);
@@ -66,7 +67,7 @@ userRouter.post(
     } catch (err) {
       res.render("register", {
         data: { username, email },
-        errors: parseError(err).errors,
+        errors: parseError(err).errors
       });
     }
   }
