@@ -19,7 +19,8 @@ catalogRouter.get("/catalog/:id", async (req, res) => {
 
   volcano.votes = volcano.voteList.length;
   volcano.hasUser = res.locals.hasUser;
-  //TODO add isAuthor and hasVoted properties
+  volcano.isAuthor = req.user?._id == volcano.author.toString();
+  volcano.hasVoted = Boolean(volcano.voteList.find(v => v.toString() == req.user?._id));
 
   res.render("details", { volcano });
 });
