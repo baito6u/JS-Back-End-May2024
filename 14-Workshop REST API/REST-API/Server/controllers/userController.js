@@ -18,4 +18,9 @@ userRouter.post("/login", async (req, res) => {
     res.json(result);
   });
 
+  userRouter.get("/logout", async (req, res) => {
+
+    res.json({ok: true});
+  });
+
 module.exports = userRouter;
