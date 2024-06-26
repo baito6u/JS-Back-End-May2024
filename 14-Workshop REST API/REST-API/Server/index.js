@@ -1,5 +1,7 @@
 const express = require("express");
 const cors = require("cors");
+const mongoose = require("mongoose");
+
 const router = require("./routes");
 
 const PORT = 3030;
@@ -18,6 +20,9 @@ app.get("/data/catalog", (req, res) => {
 });
 
 app.use(router);
+
+mongoose.connect("mongodb://localhost:27017/furniture")
+  .then(() => console.log("DB is connected!"));
 
 app.listen(PORT, () =>
   console.log(`Server is listening on http://localhost:${PORT}`)
