@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const router = require("./routes");
 
 const PORT = 3030;
 const app = express();
@@ -11,15 +12,11 @@ const app = express();
 
 app.use(cors());
 
-app.get("/", (req, res) => {
-  res.json({
-    message: "Hello World!",
-  });
-});
-
 app.get("/data/catalog", (req, res) => {
   res.json([]);
 });
+
+app.use(router);
 
 app.listen(PORT, () =>
   console.log(`Server is listening on http://localhost:${PORT}`)
