@@ -48,3 +48,12 @@ function setUserNav() {
         document.getElementById('guest').style.display = 'inline-block';
     }
 }
+
+// TODO: this is test remove it after
+
+fetch("http://localhost:5000")
+    .then(res => res.json())
+    .then(result => {
+        console.log(result.message);
+    })
+    
