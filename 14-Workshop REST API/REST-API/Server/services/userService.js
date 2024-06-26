@@ -16,11 +16,11 @@ exports.register = async (userData) => {
 
   const SECRET = "DQWDKIJ3DJIASKSDLjo3ijf23jrj29"
 
-  const token = jwt.sign(payload, SECRET);
+  const accessToken = jwt.sign(payload, SECRET);
 
   return {
     _id: user._id,
     email: user.email,
-    token: token,
+    accessToken,
   };
 };
