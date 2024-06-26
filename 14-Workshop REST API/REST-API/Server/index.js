@@ -11,6 +11,7 @@ const app = express();
 // });
 
 app.use(cors());
+app.use(express.json()); // parse data from forms
 
 app.get("/data/catalog", (req, res) => {
   res.json([]);
