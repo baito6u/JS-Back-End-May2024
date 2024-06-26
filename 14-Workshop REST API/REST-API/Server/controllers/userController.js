@@ -5,13 +5,9 @@ const userRouter = require("express").Router();
 userRouter.post("/register", async (req, res) => {
   const userData = req.body;
 
-  const { _id, email, token } = await register(userData);
+  const result = await register(userData);
 
-  res.json({
-    _id,
-    email,
-    accessToken: token,
-  });
+  res.json(result);
 });
 
 module.exports = userRouter;
