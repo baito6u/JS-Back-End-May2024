@@ -68,8 +68,8 @@ dataRouter.post("/edit/:dataId", isDataOwner, async (req, res) => {
   const data = req.body;
 
   try{
-      await edit(req.params.dataId, data).lean();
-      res.render(`/details/${dataId}`);
+      await edit(req.params.dataId, data);
+      res.render(`/details/${req.params.dataId}`);
   } catch(err) {
 
   }
@@ -77,12 +77,13 @@ dataRouter.post("/edit/:dataId", isDataOwner, async (req, res) => {
 });
 
 async function isDataOwner(req, res, next) {
-  const data = await getOne(req.params.dataId);
+  const data = await getOne(req.params.dataId).lean();
 
   if (data.owner != req.user?._id) {
     return res.redirect(`/details/${req.params.dataId}`);
   }
 
+  req.data = data;
   next();
 }
 
