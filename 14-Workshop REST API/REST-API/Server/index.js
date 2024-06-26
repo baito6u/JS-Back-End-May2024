@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 
-const PORT = 5000;
+const PORT = 3030;
 const app = express();
 
 // app.use((req, res, next) => {
@@ -15,6 +15,10 @@ app.get("/", (req, res) => {
   res.json({
     message: "Hello World!",
   });
+});
+
+app.get("/data/catalog", (req, res) => {
+  res.json([]);
 });
 
 app.listen(PORT, () =>
