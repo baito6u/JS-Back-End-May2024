@@ -2,4 +2,6 @@ const Data = require("../models/Data");
 
 exports.getAll = () => Data.find();
 
-exports.create = (data) => Data.findOne();
+exports.getOne = (dataId) => Data.findById(dataId);
+
+exports.create = (data) => Data.create(data);
