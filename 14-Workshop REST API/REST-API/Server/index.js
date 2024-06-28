@@ -3,6 +3,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 
 const router = require("./routes");
+const { authMiddleware } = require("./middlewares/authMiddleware");
 
 const PORT = 3030;
 const app = express();
@@ -14,6 +15,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json()); // parse data from forms
+app.use(authMiddleware)
 
 app.use(router);
 
