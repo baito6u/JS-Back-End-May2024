@@ -15,11 +15,12 @@ const app = express();
 
 app.use(cors());
 app.use(express.json()); // parse data from forms
-app.use(authMiddleware)
+app.use(authMiddleware);
 
 app.use(router);
 
-mongoose.connect("mongodb://localhost:27017/furniture")
+mongoose
+  .connect("mongodb://localhost:27017/furniture")
   .then(() => console.log("DB is connected!"));
 
 app.listen(PORT, () =>
