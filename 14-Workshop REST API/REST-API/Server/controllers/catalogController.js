@@ -3,6 +3,7 @@ const { getAll, create, getOne, edit, deleteData } = require("../services/dataSe
 const catalogRouter = require("express").Router();
 
 catalogRouter.get("/catalog", async (req, res) => {
+  console.log(req.query);
   const data = await getAll();
 
   res.json(data);
