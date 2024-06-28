@@ -1,14 +1,14 @@
 const jwt = require("jsonwebtoken");
 
-exports.authMiddleware = () => async (req, res, next) => {
-  const token = req.headers["X-Authorization"];
+exports.authMiddleware = async (req, res, next) => {
+  const token = req.headers["x-authorization"];
 
   if (!token) {
     return next();
   }
 
   try {
-    const decodedToken = jwt.verify(token, "mybig123123123SECRET");
+    const decodedToken = jwt.verify(token, "DQWDKIJ3DJIASKSDLjo3ijf23jrj29");
 
     req.user = decodedToken;
 
