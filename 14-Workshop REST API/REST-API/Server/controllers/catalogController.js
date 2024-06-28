@@ -1,4 +1,4 @@
-const { getAll, create, getOne } = require("../services/dataService");
+const { getAll, create, getOne, edit, deleteData } = require("../services/dataService");
 
 const catalogRouter = require("express").Router();
 
@@ -21,4 +21,20 @@ catalogRouter.get("/catalog/:dataId", async (req, res) => {
 
   res.json(singleData);
 });
+
+catalogRouter.put("/catalog/:dataId", async (req, res) => {
+  const data = req.body;
+  const singleData = await edit(req.params.dataId, data);
+
+  res.json(singleData);
+});
+
+catalogRouter.delete("/catalog/:dataId", async (req, res) => {
+  
+  await deleteData(req.params.dataId);
+
+  res.json({ok: true});
+});
+
+
 module.exports = catalogRouter;
