@@ -11,7 +11,7 @@ catalogRouter.get("/catalog", async (req, res) => {
 catalogRouter.post("/catalog", async (req, res) => {
   const data = req.body;
   
-  const furnitures = await create(data);
+  const furnitures = await create({...data, owner: req.user._id });
   
   res.json(furnitures);
 });
