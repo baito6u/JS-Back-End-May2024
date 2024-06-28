@@ -8,6 +8,10 @@ const dataSchema = new mongoose.Schema({
   price: Number,
   img: String,
   material: String,
+  owner: {
+    type: mongoose.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 const Data = mongoose.model("Data", dataSchema);
