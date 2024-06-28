@@ -7,7 +7,7 @@ const dataSchema = new mongoose.Schema({
   description: String,
   price: Number,
   img: String,
-  matirial: String,
+  material: String,
 });
 
 const Data = mongoose.model("Data", dataSchema);
